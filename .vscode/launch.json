@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug mica",
+            "program": "${workspaceFolder:mica}/.build/debug/mica",
+            "args": [],
+            "cwd": "${workspaceFolder:mica}",
+            "preLaunchTask": "swift: Build Debug mica"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Release mica",
+            "program": "${workspaceFolder:mica}/.build/release/mica",
+            "args": [],
+            "cwd": "${workspaceFolder:mica}",
+            "preLaunchTask": "swift: Build Release mica"
+        }
+    ]
+}
