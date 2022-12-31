@@ -56,3 +56,51 @@ verify that `mica` was installed correctly
 /usr/local/bin/mica
 ```
 
+## Usage
+
+Default behavior
+
+```
+% mica 
+Usage:
+
+    $ mica
+
+Commands:
+
+    + list-devices - list all the devices and runtimes available on your mac
+    + start-simulator - start specified simulator device
+
+```
+
+### List Devices
+
+Usage
+
+e.g.
+```
+mica list-devices
+```
+
+A wrapper for
+
+```
+xcrun simctl list
+```
+
+### Start Simulator
+
+Usage
+
+e.g.
+```
+mica start-simulator iPhone 14
+```
+
+A wrapper for
+
+```
+open -a Simulator --args -CurrentDeviceUDID {UDID}
+```
+
+where the UDID is matched from the input you pass in greped against teh shutdown devices in your devices list
