@@ -40,7 +40,7 @@ enum Chalkable {
 
 public class Chalk: ChalkObject {
   private var data: String
-  
+
   public var description: String { return data }
 
   init(_ data: String) {

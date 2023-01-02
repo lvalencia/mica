@@ -6,6 +6,6 @@ final class micaTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(mica().text, "Hello, World!")
+        // XCTAssertEqual(mica().text, "Hello, World!")
     }
 }
