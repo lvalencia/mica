@@ -1,5 +1,13 @@
 import Commander
 
+func createListDevicesCommand(name: String, description: String, args: CLICommandArgs?) -> Command {
+  return ListDevices(
+    name: name, 
+    description: name,
+    args: args
+    )
+}
+
 class ListDevices: CLICommand {
   override func addTo(program: Group) -> AddToProgramResult {
     program.addCommand(

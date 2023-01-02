@@ -2,6 +2,12 @@ import Chalk
 
 typealias ChalkString = String
 
+typealias ChalkConstructor = (String) -> Chalk
+
+func toChalk(data: String) -> Chalk {
+  return Chalk(data)
+}
+
 protocol ChalkObject: CustomStringConvertible {
   func bold() -> ChalkObject
   func dim() -> ChalkObject

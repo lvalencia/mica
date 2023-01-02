@@ -18,12 +18,12 @@ protocol Command {
   func addTo(program: Group) -> AddToProgramResult
 }
 
-typealias ChalkConstructor = (String) -> Chalk
-
 struct CLICommandArgs {
   let chalk: ChalkConstructor?
   let simulatorControl: SimulatorControl?
 }
+
+typealias CLICommandConstructorWithFullArgs = (String, String, CLICommandArgs?) -> Command
 
 class CLICommand: Command {
   internal let name: String
@@ -42,9 +42,7 @@ class CLICommand: Command {
   init(name: String, description: String, args: CLICommandArgs?) {
     self.name = name
     self.description = description
-    chalk = args?.chalk ?? { (data: String) -> Chalk in
-      Chalk(data)
-    }
+    chalk = args?.chalk ?? toChalk
     simulatorControl = args?.simulatorControl ?? SimCtl()
   }
 

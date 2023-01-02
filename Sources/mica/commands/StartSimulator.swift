@@ -1,6 +1,14 @@
 import Commander
 import Foundation
 
+func createStartSimulatorCommand(name: String, description: String, args: CLICommandArgs?) -> Command {
+  return StartSimulator(
+    name: name, 
+    description: name,
+    args: args
+    )
+}
+
 class StartSimulator: CLICommand {
   override func addTo(program: Group) -> AddToProgramResult {
     program.addCommand(
@@ -17,6 +25,7 @@ class StartSimulator: CLICommand {
   }
 
   private func startSimualtor(_ input: String) {
+    // @TODO - Validate Input
     let startSimulatorMessage = chalk("Attempting to start \(input) Simulator...")
     print(startSimulatorMessage)
 

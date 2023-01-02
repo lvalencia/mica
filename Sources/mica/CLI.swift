@@ -1,29 +1,39 @@
 import Commander
 import Foundation
 
+struct MicaCLIArgs {
+  let program: Group?
+  let chalk: ChalkConstructor?
+  let simulatorControl: SimulatorControl?
+  let listDevices: CLICommandConstructorWithFullArgs?
+  let startSimualtor: CLICommandConstructorWithFullArgs?
+}
+
 class MicaCLI {
   private let program: Group
-  private let chalk: ChalkConstructor
   private let simulatorControl: SimulatorControl
+  private let chalk: ChalkConstructor
+  private let listDevices: CLICommandConstructorWithFullArgs
+  private let startSimualtor: CLICommandConstructorWithFullArgs
 
-  init() {
-    program = Group()
-    chalk = { (data: String) -> Chalk in
-      Chalk(data)
-    }
-    simulatorControl = SimCtl()
-
-    buildCLI()
+  convenience init() {
+    self.init(
+      args: MicaCLIArgs(
+        program: nil,
+        chalk: nil,
+        simulatorControl: nil,
+        listDevices: nil,
+        startSimualtor: nil
+      )
+    )
   }
 
-  init(program: Group?, chalk: ChalkConstructor?, simulatorControl: SimulatorControl?) {
-    self.program = program ?? Group()
-
-    self.chalk = chalk ?? { (data: String) -> Chalk in
-      Chalk(data)
-    }
-
-    self.simulatorControl = simulatorControl ?? SimCtl()
+  init(args: MicaCLIArgs) {
+    program = args.program ?? Group()
+    chalk = args.chalk ?? toChalk
+    simulatorControl = args.simulatorControl ?? SimCtl()
+    listDevices = args.listDevices ?? createListDevicesCommand
+    startSimualtor = args.listDevices ?? createStartSimulatorCommand
 
     buildCLI()
   }
@@ -38,22 +48,46 @@ class MicaCLI {
       simulatorControl: simulatorControl
     )
 
-    ListDevices(
-      name: "list-devices",
-      description: String(
-        chalk("list all the devices and runtimes available on your mac")
-          .underlined()
-      ),
-      args: args
+    let listDevicesName = "list-devices"
+    let listDevicesDescription = String(
+      chalk("list all the devices and runtimes available on your mac")
+        .underlined()
+    )
+    let addListDevicesResult = listDevices(
+      listDevicesName,
+      listDevicesDescription,
+      args
     ).addTo(program: program)
 
-    StartSimulator(
-      name: "start-simulator",
-      description: String(
-        chalk("start specified simulator device")
-          .underlined()
-      ),
-      args: args
+    printAddResultFor(
+      name: listDevicesName,
+      result: addListDevicesResult
+    )
+
+    let startSimulatorName = "start-simulator"
+    let startSimualtorDescription = String(
+      chalk("start specified simulator device")
+        .underlined()
+    )
+    let addStartSimulatorResult = startSimualtor(
+      startSimulatorName,
+      startSimualtorDescription,
+      args
     ).addTo(program: program)
+
+    printAddResultFor(
+      name: startSimulatorName,
+      result: addStartSimulatorResult
+    )
+  }
+
+  func printAddResultFor(name: String, result: AddToProgramResult) {
+    if result.status == AddToProgramStatus.failure {
+      switch result.error! {
+      case AddToProgramErrorReason.duplicate:
+        // @TODO - replace calls to print with logger that I can customize; e.g. this shouldn't log in built and installed version 
+        print("Failed to add \(name) to commands, program already has command")
+      }
+    }
   }
 }
