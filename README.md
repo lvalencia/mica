@@ -2,7 +2,7 @@
 
 A collection of shortcuts that I use on my Mac to avoid remebering the system commands
 
-**Warning**: The Code in this codebase is dogshit; do not replciate, copy, or extend any of the patterns you see here. Doing so will result in harm to your future self.
+**Warning**: The Code in this codebase is not exemplary; do not replciate, copy, or extend any of the patterns you see here. Doing so will result in harm to your future self.
 
 ## Setup
 
@@ -79,7 +79,7 @@ Usage
 
 e.g.
 ```
-mica list-devices
+mica devices-list
 ```
 
 A wrapper for
@@ -94,7 +94,7 @@ Usage
 
 e.g.
 ```
-mica start-simulator iPhone 14
+mica simulator-start iPhone 14
 ```
 
 A wrapper for

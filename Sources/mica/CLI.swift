@@ -1,7 +1,7 @@
 import Commander
 import Foundation
 
-struct MicaCLIArgs {
+struct CLIArgs {
   let program: Group?
   let chalk: ChalkConstructor?
   let simulatorControl: SimulatorControl?
@@ -9,7 +9,7 @@ struct MicaCLIArgs {
   let startSimualtor: CLICommandConstructorWithFullArgs?
 }
 
-class MicaCLI {
+class CLI {
   private let program: Group
   private let simulatorControl: SimulatorControl
   private let chalk: ChalkConstructor
@@ -18,7 +18,7 @@ class MicaCLI {
 
   convenience init() {
     self.init(
-      args: MicaCLIArgs(
+      args: CLIArgs(
         program: nil,
         chalk: nil,
         simulatorControl: nil,
@@ -28,7 +28,7 @@ class MicaCLI {
     )
   }
 
-  init(args: MicaCLIArgs) {
+  init(args: CLIArgs) {
     program = args.program ?? Group()
     chalk = args.chalk ?? toChalk
     simulatorControl = args.simulatorControl ?? SimCtl()
@@ -48,7 +48,7 @@ class MicaCLI {
       simulatorControl: simulatorControl
     )
 
-    let listDevicesName = "list-devices"
+    let listDevicesName = "devices-list"
     let listDevicesDescription = String(
       chalk("list all the devices and runtimes available on your mac")
         .underlined()
@@ -64,7 +64,7 @@ class MicaCLI {
       result: addListDevicesResult
     )
 
-    let startSimulatorName = "start-simulator"
+    let startSimulatorName = "simulator-start"
     let startSimualtorDescription = String(
       chalk("start specified simulator device")
         .underlined()
