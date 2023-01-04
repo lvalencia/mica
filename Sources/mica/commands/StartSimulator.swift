@@ -1,14 +1,6 @@
 import Commander
 import Foundation
 
-func createStartSimulatorCommand(name: String, description _: String, args: CLICommandArgs?) -> Command {
-  return StartSimulator(
-    name: name,
-    description: name,
-    args: args
-  )
-}
-
 enum InputValidity {
   case valid
   case invalid

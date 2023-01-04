@@ -50,7 +50,7 @@ class CLICommand: Command {
   }
 
   func addTo(program: Commander.Group) -> AddToProgramResult {
-    program.addCommand(
+     program.addCommand(
       name,
       description,
       command { (input: [String]) in

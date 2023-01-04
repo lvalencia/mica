@@ -32,9 +32,9 @@ class CLI {
     program = args.program ?? Group()
     chalk = args.chalk ?? toChalk
 
-    listDevices = args.listDevices ?? createListDevicesCommand
-    startSimualtor = args.startSimualtor ?? createStartSimulatorCommand
-    installXCodeTools = args.installXCodeTools ?? createInstallXCodeToolsCommand
+    listDevices = args.listDevices ?? ListDevices.init
+    startSimualtor = args.startSimualtor ?? StartSimulator.init
+    installXCodeTools = args.installXCodeTools ?? InstallXCodeTools.init
 
     buildCLI()
   }
