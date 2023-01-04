@@ -104,3 +104,18 @@ open -a Simulator --args -CurrentDeviceUDID {UDID}
 ```
 
 where the UDID is matched from the input you pass in greped against teh shutdown devices in your devices list
+
+### Install XCode Tools
+
+Usage
+
+e.g.
+```
+mica xcode-install-tools
+```
+
+A warpper for
+
+```
+xcode-select --install
+```
