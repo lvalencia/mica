@@ -20,7 +20,8 @@ protocol Command {
 
 struct CLICommandArgs {
   let chalk: ChalkConstructor?
-  let simulatorControl: SimulatorControl?
+  let simulatorController: SimulatorController?
+  let xcodeController:  XCodeController?
 }
 
 typealias CLICommandConstructorWithFullArgs = (String, String, CLICommandArgs?) -> Command
@@ -29,7 +30,8 @@ class CLICommand: Command {
   internal let name: String
   internal let description: String
   internal let chalk: ChalkConstructor
-  internal let simulatorControl: SimulatorControl
+  internal let simulatorController: SimulatorController
+  internal let xcodeController: XCodeController
 
   convenience init(name: String, description: String) {
     self.init(
@@ -43,10 +45,25 @@ class CLICommand: Command {
     self.name = name
     self.description = description
     chalk = args?.chalk ?? toChalk
-    simulatorControl = args?.simulatorControl ?? SimCtl()
+    simulatorController = args?.simulatorController ?? SimCtl()
+    xcodeController = args?.xcodeController ?? XCodeSelect()
   }
 
-  func addTo(program _: Commander.Group) -> AddToProgramResult {
-    fatalError("Not Implemented")
+  func addTo(program: Commander.Group) -> AddToProgramResult {
+    program.addCommand(
+      name,
+      description,
+      command { (input: [String]) in
+        self.executeCommand(args: input)
+      }
+    )
+    return AddToProgramResult(
+      status: AddToProgramStatus.success,
+      error: nil
+    )
+  }
+
+  internal func executeCommand(args: [String]) {
+      fatalError("Attempted to execute abstract method #executeCommand");
   }
 }

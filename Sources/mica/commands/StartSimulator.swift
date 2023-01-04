@@ -21,22 +21,9 @@ struct ValidateInputResult {
 }
 
 class StartSimulator: CLICommand {
-  override func addTo(program: Group) -> AddToProgramResult {
-    // @TODO - Add Checks
-    program.addCommand(
-      name,
-      description,
-      command { (input: [String]) in
-        self.startSimualtor(input.joined(separator: " "))
-      }
-    )
-    return AddToProgramResult(
-      status: AddToProgramStatus.success,
-      error: nil
-    )
-  }
+  override internal func executeCommand(args: [String]) {
+    let input = args.joined(separator: " ")
 
-  private func startSimualtor(_ input: String) {
     let validityResult = validate(input: input)
     if validityResult.validity == InputValidity.invalid {
       print(validityResult.error)
@@ -47,7 +34,7 @@ class StartSimulator: CLICommand {
     print(startSimulatorMessage)
 
     let regex = validityResult.inputAsRegex!
-    let devices = simulatorControl.listDevices()
+    let devices = simulatorController.listDevices()
 
     // @TODO - Dependency Inject Function
     let matchRegexResult = matchRegex(
@@ -87,7 +74,7 @@ class StartSimulator: CLICommand {
     )
     let udid = NSString(string: device).substring(with: udidResults[0].range)
 
-    print(simulatorControl.startSimualtor(udid: udid))
+    print(simulatorController.startSimualtor(udid: udid))
   }
 
   private func validate(input: String) -> ValidateInputResult {

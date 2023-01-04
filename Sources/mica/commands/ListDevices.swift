@@ -5,30 +5,16 @@ func createListDevicesCommand(name: String, description: String, args: CLIComman
     name: name, 
     description: name,
     args: args
-    )
+  )
 }
 
 class ListDevices: CLICommand {
-  override func addTo(program: Group) -> AddToProgramResult {
-    program.addCommand(
-      name,
-      description,
-      command {
-        self.listDevices()
-      }
-    )
-    return AddToProgramResult(
-      status: AddToProgramStatus.success,
-      error: nil
-    )
-  }
-
-  private func listDevices() {
+  override internal func executeCommand(args: [String]) {
     let listingDevicesMessage = chalk("Listing Devices on your machine...")
       .backgroundWhite()
       .cyan()
 
     print(listingDevicesMessage)
-    print(simulatorControl.listDevices())
+    print(simulatorController.listDevices())
   }
 }
