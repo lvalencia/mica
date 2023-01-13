@@ -39,8 +39,8 @@ class CLI {
     buildCLI()
   }
 
-  public func run() {
-    program.run()
+  public func run(_ version:String? = nil) {
+    program.run(version)
   }
 
   private func buildCLI() {

@@ -1,6 +1,7 @@
 @main
 public enum mica {
   public static func main() {
-    CLI().run()
+    let version = "0.1.0"
+    CLI().run(version)
   }
 }
